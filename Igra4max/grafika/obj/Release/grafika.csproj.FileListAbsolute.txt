@@ -1,0 +1,10 @@
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\bin\Release\grafika.exe.config
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\bin\Release\grafika.exe
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\bin\Release\grafika.pdb
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\obj\Release\grafika.csproj.AssemblyReference.cache
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\obj\Release\grafika.Form1.resources
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\obj\Release\grafika.Properties.Resources.resources
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\obj\Release\grafika.csproj.GenerateResource.cache
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\obj\Release\grafika.csproj.CoreCompileInputs.cache
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\obj\Release\grafika.exe
+C:\Users\HP\source\repos\Igra4MAX\Igra4max\grafika\obj\Release\grafika.pdb
