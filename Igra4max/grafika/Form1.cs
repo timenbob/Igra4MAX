@@ -14,7 +14,7 @@ using System.Windows.Forms;
 namespace grafika
 {
     public partial class Form1 : Form
-    {   
+    {
         // Tu hranimo osnovne podatke o igralcih
         string ime1 = "ime1";
         string ime2 = "ime2";
@@ -24,7 +24,7 @@ namespace grafika
         int steviloZmag_1 = 0;
         int steviloZmag_2 = 0;
         int steviloZmagZaZmago = 0;
-        
+
         // Tu hranimo podatke o igralnem polju
 
         private Button[,] mreza;
@@ -72,7 +72,7 @@ namespace grafika
             InitializeComponent();
         }
 
-        
+
         /// <summary>
         /// Ta funkcija ustvari prvi ekran kjer sprašujemo po dimenzijah in po imenih
         /// </summary>
@@ -196,7 +196,7 @@ namespace grafika
         private void button1_Click(object sender, EventArgs e)
         {
             MessageBox.Show($"Širina polja: {sirina}, Višina polja: {visina}, Ime igralec1: {ime1}, Ime igralec2: {ime2}");
-            
+
 
             KateriEkran = true;
             // Access the text boxes and read their values
@@ -239,10 +239,10 @@ namespace grafika
             button1.Visible = false;
 
             steviloZasedenihPolijZaZmago = sirina * visina / 4;
-            steviloZmagZaZmago = visina*sirina/16;
-           
+            steviloZmagZaZmago = visina * sirina / 16;
 
-            
+
+
             UstvariPolje();
             int velikostPolja = this.ClientSize.Height;
             int sirinaGumba = velikostPolja / sirina;
@@ -252,7 +252,7 @@ namespace grafika
 
         }
 
-        
+
         /// <summary>
         /// Funkcija ki skrbi da so med igro pravilno izpisani podatki
         /// ce objekti še niso ustvarjeni jih ustvari sicer le spremeni pozicije ter podatke
@@ -260,7 +260,7 @@ namespace grafika
         private void SledenjePodatkov()
         {
             // Adjust columnWidth to bring columns closer together
-            int sirinaPolja = mreza[0,0].Width * visina + 5;
+            int sirinaPolja = mreza[0, 0].Width * visina + 5;
             int padding = 20;
 
             // Positioning offsets
@@ -272,7 +272,7 @@ namespace grafika
             // Column 2 X position (Player 1 labels)
             int col2X = col1X + columnWidth;
             // Column 3 X position (Player 2 labels)
-            int col3X = col2X + columnWidth-150;
+            int col3X = col2X + columnWidth - 150;
 
             // Creating or updating labels for player names
             if (Ime1 == null)
@@ -312,7 +312,7 @@ namespace grafika
             stZmag.Location = new Point(col1X, stPolij.Bottom + padding);
             stZmag.Text = $"Število zmag / {steviloZmagZaZmago}";
 
-          
+
 
             // Creating or updating labels for player 1's dynamic data
             if (stPolij1 == null)
@@ -333,7 +333,7 @@ namespace grafika
             stZmag1.Location = new Point(col2X, stZmag.Top);
             stZmag1.Text = "" + steviloZmag_1;
 
-           
+
             // Creating or updating labels for player 2's dynamic data
             if (stPolij2 == null)
             {
@@ -353,27 +353,27 @@ namespace grafika
             stZmag2.Location = new Point(col3X, stZmag.Top);
             stZmag2.Text = "" + steviloZmag_2;
 
-            
+
             //gumba
 
 
-            if (reset == null) 
+            if (reset == null)
             {
                 reset = new Button();
                 reset.Click += new EventHandler(reset_Click);
                 reset.Text = "Ponovno";
                 this.Controls.Add(reset);
             }
-            reset.Location = new Point(col3X, stZmag.Bottom + 3*padding);
+            reset.Location = new Point(col3X, stZmag.Bottom + 3 * padding);
 
-            if (konec == null) 
+            if (konec == null)
             {
                 konec = new Button();
                 konec.Click += new EventHandler(konec_Click);
                 konec.Text = "Konec";
                 this.Controls.Add(konec);
             }
-            konec.Location = new Point(col2X, stZmag.Bottom + 3*padding);
+            konec.Location = new Point(col2X, stZmag.Bottom + 3 * padding);
 
             if (navodila == null)
             {
@@ -396,7 +396,7 @@ namespace grafika
             if (stPolij2 != null) stPolij2.Font = new Font(stPolij2.Font.FontFamily, newSize);
             if (stZmag2 != null) stZmag2.Font = new Font(stZmag2.Font.FontFamily, newSize);
         }
-        
+
         /// <summary>
         /// Gumb ki resetira igro
         /// </summary>
@@ -431,7 +431,7 @@ namespace grafika
             SledenjePodatkov();
         }
 
-        
+
         /// <summary>
         /// gumb s katerim lahko zaključimo igro
         /// </summary>
@@ -441,7 +441,7 @@ namespace grafika
         {
             Button gumb = sender as Button;
 
-        
+
             //dodatni dialog da je malo zanimivo
 
             DialogResult result = MessageBox.Show(
@@ -453,7 +453,7 @@ namespace grafika
 
             if (result == DialogResult.Yes)
             {
-                this.Close(); 
+                this.Close();
             }
             else
             {
@@ -480,13 +480,13 @@ namespace grafika
                 MessageBoxIcon.Information
             );
 
-            
+
 
         }
         // ==============================================
 
 
-        bool jeClick=false;// potrebno da vemo ali smo na polju ko kliknemo ali ne
+        bool jeClick = false;// potrebno da vemo ali smo na polju ko kliknemo ali ne
 
         /// <summary>
         /// Ko kliknemo na nek gumb na igralnem polju kaj se zgodi
@@ -496,33 +496,33 @@ namespace grafika
         private void gumb_Click(object sender, EventArgs e)
         {
             Button gumb = sender as Button;
-          
-                gumb.BackColor = naVrsti;
 
-                if (naVrsti == Color.Blue)
-                {
-                    naVrsti = Color.Red;
-                    Ime1.BackColor = Color.Red;
-                    Ime2.BackColor = Color.White;
-                    steviloZasedenihPolij_2++;
-                }
-                else
-                {
-                    naVrsti = Color.Blue;
-                    Ime2.BackColor = Color.Blue;
-                    Ime1.BackColor = Color.White;
-                    steviloZasedenihPolij_1++;  
-                }
+            gumb.BackColor = naVrsti;
 
-
+            if (naVrsti == Color.Blue)
+            {
+                naVrsti = Color.Red;
+                Ime1.BackColor = Color.Red;
+                Ime2.BackColor = Color.White;
+                steviloZasedenihPolij_2++;
+            }
+            else
+            {
+                naVrsti = Color.Blue;
+                Ime2.BackColor = Color.Blue;
+                Ime1.BackColor = Color.White;
+                steviloZasedenihPolij_1++;
+            }
 
 
-            
+
+
+
             gumb.Enabled = false;
             konec.Focus();
             rezultatInUpdejt();
             zmaga();
-            jeClick=true;
+            jeClick = true;
         }
 
         /// <summary>
@@ -536,13 +536,13 @@ namespace grafika
             Button gumb = sender as Button;
             if (gumb.BackColor == Color.White)
             {
-                if (naVrsti == Color.Red) {gumb.BackColor = Color.LightPink;}
+                if (naVrsti == Color.Red) { gumb.BackColor = Color.LightPink; }
                 else if (naVrsti == Color.Blue) { gumb.BackColor = Color.LightBlue; }
-              
+
             }
         }
 
-        
+
         /// <summary>
         /// ko z misko zapustimo polje se barve preuredijo nazaj
         /// </summary>
@@ -551,8 +551,8 @@ namespace grafika
         private void gumb_MouseLeave(object sender, EventArgs e)
         {
             Button gumb = sender as Button;
-            if(gumb.BackColor == Color.LightPink || gumb.BackColor == Color.LightBlue) { gumb.BackColor=Color.White; }
-             
+            if (gumb.BackColor == Color.LightPink || gumb.BackColor == Color.LightBlue) { gumb.BackColor = Color.White; }
+
         }
 
         /// <summary>
@@ -604,7 +604,7 @@ namespace grafika
         /// <param name="e"></param>
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
-            if (this.ClientSize.Height <= 400) { this.Height=450; };
+            if (this.ClientSize.Height <= 400) { this.Height = 450; };
             if (this.ClientSize.Height >= 1000) { this.Height = 900; };
             if (this.ClientSize.Width <= 800) { this.Width = 1000; };
 
@@ -616,8 +616,8 @@ namespace grafika
 
             int sirinaGumba = Math.Min(sirinaGumba1, sirinaGumba2);
 
-            this.Width= sirinaGumba*visina+500;
-            
+            this.Width = sirinaGumba * visina + 500;
+
             if (KateriEkran)
             {
                 UstvariPolje();
@@ -628,15 +628,15 @@ namespace grafika
 
         }
 
-        
 
-        
+
+
         /// <summary>
         /// Preverimo ali imamo zmagovalca
         /// </summary>
         private void zmaga()
         {
-            string zmagal="";
+            string zmagal = "";
             if (steviloZasedenihPolij_1 >= steviloZasedenihPolijZaZmago)
             {
                 zmagal = ime1;
@@ -659,15 +659,15 @@ namespace grafika
                 else if (steviloZmag_1 < steviloZmag_2) { zmagal = ime2; }
                 else
                 {
-                    if(steviloZasedenihPolij_1 > steviloZasedenihPolij_2) { zmagal = ime1; }
+                    if (steviloZasedenihPolij_1 > steviloZasedenihPolij_2) { zmagal = ime1; }
                     else if (steviloZasedenihPolij_1 < steviloZasedenihPolij_2) { zmagal = ime2; }
-                    else 
+                    else
                     {
                         MessageBox.Show("Izzid je neodločen!!!");
                     }
                 }
             }
-            if(zmagal != "") 
+            if (zmagal != "")
             {
                 MessageBox.Show($"Zmagal je {zmagal}");
                 for (int i = 0; i < visina; i++)
@@ -676,13 +676,13 @@ namespace grafika
                     {
 
                         mreza[i, j].Enabled = false;
-                        
-                        
+
+
 
                     }
                 }
             }
-            
+
 
         }
 
@@ -710,13 +710,14 @@ namespace grafika
         /// Pokliče 2 funkciji ki skupaj uredite število zmag
         /// </summary>
         private void rezultatInUpdejt()
-        {   
+        {
             StiriVVrsto();
             SledenjePodatkov();
         }
 
         /// <summary>
         /// Preverimo ali se je kje pojavilo 4 v vrsto in ce se je naredimo stene
+        /// Pridobljeno iz chatGpt in dodelano ročno
         /// </summary>
         private void StiriVVrsto()
         {
@@ -750,6 +751,7 @@ namespace grafika
 
                             if ((redCount == 3 && darkRedCount == 1) || (redCount == 4 && darkRedCount == 0))
                             {
+                                if (redCount == 3 && darkRedCount == 1) { steviloZasedenihPolij_1++; }
                                 SpremeniVStene(i, j, 0, 1, Color.Red);
                             }
                         }
@@ -775,6 +777,7 @@ namespace grafika
 
                             if ((redCount == 3 && darkRedCount == 1) || (redCount == 4 && darkRedCount == 0))
                             {
+                                if (redCount == 3 && darkRedCount == 1) { steviloZasedenihPolij_1++; }
                                 SpremeniVStene(i, j, 1, 0, Color.Red);
                             }
                         }
@@ -800,6 +803,7 @@ namespace grafika
 
                             if ((redCount == 3 && darkRedCount == 1) || (redCount == 4 && darkRedCount == 0))
                             {
+                                if (redCount == 3 && darkRedCount == 1) { steviloZasedenihPolij_1++; }
                                 SpremeniVStene(i, j, 1, 1, Color.Red);
                             }
                         }
@@ -825,6 +829,7 @@ namespace grafika
 
                             if ((redCount == 3 && darkRedCount == 1) || (redCount == 4 && darkRedCount == 0))
                             {
+                                if (redCount == 3 && darkRedCount == 1) { steviloZasedenihPolij_1++; }
                                 SpremeniVStene(i, j, 1, -1, Color.Red);
                             }
                         }
@@ -853,6 +858,7 @@ namespace grafika
 
                             if ((blueCount == 3 && darkBlueCount == 1) || (blueCount == 4 && darkBlueCount == 0))
                             {
+                                if (blueCount == 3 && darkBlueCount == 1) { steviloZasedenihPolij_2++; }
                                 SpremeniVStene(i, j, 0, 1, Color.Blue);
                             }
                         }
@@ -878,6 +884,7 @@ namespace grafika
 
                             if ((blueCount == 3 && darkBlueCount == 1) || (blueCount == 4 && darkBlueCount == 0))
                             {
+                                if (blueCount == 3 && darkBlueCount == 1) { steviloZasedenihPolij_2++; }
                                 SpremeniVStene(i, j, 1, 0, Color.Blue);
                             }
                         }
@@ -903,6 +910,7 @@ namespace grafika
 
                             if ((blueCount == 3 && darkBlueCount == 1) || (blueCount == 4 && darkBlueCount == 0))
                             {
+                                if (blueCount == 3 && darkBlueCount == 1) { steviloZasedenihPolij_2++; }
                                 SpremeniVStene(i, j, 1, 1, Color.Blue);
                             }
                         }
@@ -928,6 +936,7 @@ namespace grafika
 
                             if ((blueCount == 3 && darkBlueCount == 1) || (blueCount == 4 && darkBlueCount == 0))
                             {
+                                if (blueCount == 3 && darkBlueCount == 1) { steviloZasedenihPolij_2++; }
                                 SpremeniVStene(i, j, 1, -1, Color.Blue);
                             }
                         }
@@ -946,17 +955,17 @@ namespace grafika
         /// <param name="playerColor"></param>
         private void SpremeniVStene(int row, int col, int rowDir, int colDir, Color playerColor)
         {
-            
+
 
             if (playerColor == Color.Red)
             {
                 steviloZmag_1++;
                 steviloZasedenihPolij_1 -= 4;
                 for (int k = 0; k < 4; k++)
-                    {
-                        mreza[row + k * rowDir, col + k * colDir].BackColor = Color.DarkRed;
-                    }
-                
+                {
+                    mreza[row + k * rowDir, col + k * colDir].BackColor = Color.DarkRed;
+                }
+
             }
             else if (playerColor == Color.Blue)
             {
@@ -967,8 +976,8 @@ namespace grafika
                     mreza[row + k * rowDir, col + k * colDir].BackColor = Color.DarkBlue;
                 }
             }
-            
+
         }
-        
+
     }
 }
