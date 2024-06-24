@@ -1,0 +1,10 @@
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\bin\Debug\grafika.exe.config
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\bin\Debug\grafika.exe
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\bin\Debug\grafika.pdb
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\obj\Debug\grafika.csproj.AssemblyReference.cache
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\obj\Debug\grafika.Form1.resources
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\obj\Debug\grafika.Properties.Resources.resources
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\obj\Debug\grafika.csproj.GenerateResource.cache
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\obj\Debug\grafika.csproj.CoreCompileInputs.cache
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\obj\Debug\grafika.exe
+C:\Users\HP\source\repos\Programiranje_3\Igra4max\grafika\obj\Debug\grafika.pdb
