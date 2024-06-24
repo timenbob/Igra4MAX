@@ -14,8 +14,8 @@ using System.Windows.Forms;
 namespace grafika
 {
     public partial class Form1 : Form
-    {   //RDECI je 1
-        // osnovi podatki igralcev
+    {   
+        // Tu hranimo osnovne podatke o igralcih
         string ime1 = "ime1";
         string ime2 = "ime2";
         int steviloZasedenihPolij_1 = 0;
@@ -24,8 +24,8 @@ namespace grafika
         int steviloZmag_1 = 0;
         int steviloZmag_2 = 0;
         int steviloZmagZaZmago = 0;
-        //
-        // podatki za samo igro
+        
+        // Tu hranimo podatke o igralnem polju
 
         private Button[,] mreza;
 
@@ -33,16 +33,15 @@ namespace grafika
         int visina = 10;
         int sirina = 10;
 
-
+        // podatek ki pove kdo je na vrsti
         Color naVrsti = Color.Red;
 
         //
-        //podatki za igro
+        // Podatki za igro
         private Label Ime1;
         private Label Ime2;
         private Label stPolij;
         private Label stZmag;
-        private Label stZidov;
 
         private Label stPolij1;
         private Label stPolij2;
@@ -54,7 +53,7 @@ namespace grafika
         private Button navodila;
 
         //
-        //zacetni ekran stvari
+        // Potrebne stvari za prvi ekran
         private TextBox textBox1;
         private TextBox textBox2;
         private TextBox textBox3;
@@ -73,7 +72,10 @@ namespace grafika
             InitializeComponent();
         }
 
-        //zacetni ekran
+        
+        /// <summary>
+        /// Ta funkcija ustvari prvi ekran kjer sprašujemo po dimenzijah in po imenih
+        /// </summary>
         public void ZacetniEkran()
         {
             // 
@@ -184,6 +186,13 @@ namespace grafika
             ZacetniEkran();
         }
 
+        /// <summary>
+        /// Ko kliknemo gumb na začetnek ekranu se zgodi nalsednje
+        /// nastavimo dimenzije stevilo potrebnih zmag imena itd
+        /// ter za te podatke ustvarimo igralno polje
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             MessageBox.Show($"Širina polja: {sirina}, Višina polja: {visina}, Ime igralec1: {ime1}, Ime igralec2: {ime2}");
@@ -243,7 +252,11 @@ namespace grafika
 
         }
 
-        // sledenje podatkom
+        
+        /// <summary>
+        /// Funkcija ki skrbi da so med igro pravilno izpisani podatki
+        /// ce objekti še niso ustvarjeni jih ustvari sicer le spremeni pozicije ter podatke
+        /// </summary>
         private void SledenjePodatkov()
         {
             // Adjust columnWidth to bring columns closer together
@@ -370,8 +383,25 @@ namespace grafika
                 this.Controls.Add(navodila);
             }
             navodila.Location = new Point(col2X, konec.Bottom + 3 * padding);
+
+            // nastavimo font
+            float newSize = 12f;
+
+            if (Ime1 != null) Ime1.Font = new Font(Ime1.Font.FontFamily, newSize);
+            if (Ime2 != null) Ime2.Font = new Font(Ime2.Font.FontFamily, newSize);
+            if (stPolij != null) stPolij.Font = new Font(stPolij.Font.FontFamily, newSize);
+            if (stZmag != null) stZmag.Font = new Font(stZmag.Font.FontFamily, newSize);
+            if (stPolij1 != null) stPolij1.Font = new Font(stPolij1.Font.FontFamily, newSize);
+            if (stZmag1 != null) stZmag1.Font = new Font(stZmag1.Font.FontFamily, newSize);
+            if (stPolij2 != null) stPolij2.Font = new Font(stPolij2.Font.FontFamily, newSize);
+            if (stZmag2 != null) stZmag2.Font = new Font(stZmag2.Font.FontFamily, newSize);
         }
-        //gumba
+        
+        /// <summary>
+        /// Gumb ki resetira igro
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void reset_Click(object sender, EventArgs e)
         {
             // Reset player statistics
@@ -394,26 +424,26 @@ namespace grafika
                 }
             }
 
-            Ime1.ForeColor = Color.Purple;
-            Ime2.ForeColor = Color.Black;
+            Ime1.BackColor = Color.Red;
+            Ime2.BackColor = Color.White;
 
             // Update the UI with reset values
-            UpdateLabels();
+            SledenjePodatkov();
         }
 
-        private void UpdateLabels()
-        {
-            if (stPolij1 != null) stPolij1.Text = steviloZasedenihPolij_1.ToString();
-            if (stPolij2 != null) stPolij2.Text = steviloZasedenihPolij_2.ToString();
-            if (stZmag1 != null) stZmag1.Text = steviloZmag_1.ToString();
-            if (stZmag2 != null) stZmag2.Text = steviloZmag_2.ToString();
-        }
-
+        
+        /// <summary>
+        /// gumb s katerim lahko zaključimo igro
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void konec_Click(object sender, EventArgs e)
         {
             Button gumb = sender as Button;
 
         
+            //dodatni dialog da je malo zanimivo
+
             DialogResult result = MessageBox.Show(
                 "Ste prepričani, da želite zaključiti igro ?",
                 "Konec igre",
@@ -423,17 +453,7 @@ namespace grafika
 
             if (result == DialogResult.Yes)
             {
-                // Optional: Save game state or statistics
-                //SaveGameState();
-
-                // Optional: Display final statistics or message
-               //ShowFinalStatistics();
-
-                // Close the game window or application
-                this.Close(); // Close the form
-
-                // Alternatively, exit the entire application
-                // Application.Exit();
+                this.Close(); 
             }
             else
             {
@@ -441,6 +461,11 @@ namespace grafika
             }
         }
 
+        /// <summary>
+        /// gumb ki izpiše navodila
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void navodila_Click(object sender, EventArgs e)
         {
             Button gumb = sender as Button;
@@ -461,7 +486,7 @@ namespace grafika
         // ==============================================
 
 
-        bool jeClick=false;
+        bool jeClick=false;// potrebno da vemo ali smo na polju ko kliknemo ali ne
 
         /// <summary>
         /// Ko kliknemo na nek gumb na igralnem polju kaj se zgodi
@@ -500,6 +525,12 @@ namespace grafika
             jeClick=true;
         }
 
+        /// <summary>
+        /// kaj se zgodi ko se z miško postavimo na neko polje
+        /// opolje se obrava v svetlo modro oziroma rdeco
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gumb_MouseEnter(object sender, EventArgs e)
         {
             Button gumb = sender as Button;
@@ -511,7 +542,12 @@ namespace grafika
             }
         }
 
-        // Method to handle reverting back to original color on mouse leave
+        
+        /// <summary>
+        /// ko z misko zapustimo polje se barve preuredijo nazaj
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gumb_MouseLeave(object sender, EventArgs e)
         {
             Button gumb = sender as Button;
@@ -519,7 +555,9 @@ namespace grafika
              
         }
 
-        // Update the UstvariPolje method to add event handlers for MouseEnter and MouseLeave
+        /// <summary>
+        /// Metoda ki ustavri igralno polje. Lahko jo uporabimo tudi samo za spremenjanje dimenzij ter pozicij gumbov
+        /// </summary>
         public void UstvariPolje()
         {
             if (mreza == null)
@@ -555,14 +593,20 @@ namespace grafika
             }
 
             SledenjePodatkov();
-            AdjustFontSize();
         }
 
 
+        /// <summary>
+        /// fukcija da ko večamo ekran se izpisi na njem prilagodijo
+        /// smo malo omejili minimum ter maksimum dimenzij
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
             if (this.ClientSize.Height <= 400) { this.Height=450; };
             if (this.ClientSize.Height >= 1000) { this.Height = 900; };
+            if (this.ClientSize.Width <= 800) { this.Width = 1000; };
 
             int velikostPolja = this.ClientSize.Height;
             //int sirinaGumba = velikostPolja / sirina;
@@ -578,30 +622,18 @@ namespace grafika
             {
                 UstvariPolje();
                 SledenjePodatkov();
-                AdjustFontSize();
 
             }
             else { ZacetniEkran(); }
 
         }
 
-        private void AdjustFontSize()
-        {
-            float newSize = 12f; // Define the new font size, adjust as needed
+        
 
-            // Adjust font size for each label if it exists
-            if (Ime1 != null) Ime1.Font = new Font(Ime1.Font.FontFamily, newSize);
-            if (Ime2 != null) Ime2.Font = new Font(Ime2.Font.FontFamily, newSize);
-            if (stPolij != null) stPolij.Font = new Font(stPolij.Font.FontFamily, newSize);
-            if (stZmag != null) stZmag.Font = new Font(stZmag.Font.FontFamily, newSize);
-            if (stZidov != null) stZidov.Font = new Font(stZidov.Font.FontFamily, newSize);
-            if (stPolij1 != null) stPolij1.Font = new Font(stPolij1.Font.FontFamily, newSize);
-            if (stZmag1 != null) stZmag1.Font = new Font(stZmag1.Font.FontFamily, newSize);
-            if (stPolij2 != null) stPolij2.Font = new Font(stPolij2.Font.FontFamily, newSize);
-            if (stZmag2 != null) stZmag2.Font = new Font(stZmag2.Font.FontFamily, newSize);
-        }
-
-        //podatki
+        
+        /// <summary>
+        /// Preverimo ali imamo zmagovalca
+        /// </summary>
         private void zmaga()
         {
             string zmagal="";
@@ -674,13 +706,18 @@ namespace grafika
             }
             return true;
         }
+        /// <summary>
+        /// Pokliče 2 funkciji ki skupaj uredite število zmag
+        /// </summary>
         private void rezultatInUpdejt()
         {   
             StiriVVrsto();
             SledenjePodatkov();
         }
 
-        //pobiranje
+        /// <summary>
+        /// Preverimo ali se je kje pojavilo 4 v vrsto in ce se je naredimo stene
+        /// </summary>
         private void StiriVVrsto()
         {
             for (int i = 0; i < visina; i++)
@@ -899,7 +936,14 @@ namespace grafika
             }
         }
 
-
+        /// <summary>
+        /// Spreminjanje v stene
+        /// </summary>
+        /// <param name="row">vrstica kjer s ezačne stena</param>
+        /// <param name="col">stolpec kje se začne stena</param>
+        /// <param name="rowDir">v smer ki gre stena</param>
+        /// <param name="colDir">v smer ki gre stena</param>
+        /// <param name="playerColor"></param>
         private void SpremeniVStene(int row, int col, int rowDir, int colDir, Color playerColor)
         {
             
@@ -925,44 +969,6 @@ namespace grafika
             }
             
         }
-        //TODO
-        //private void DrawWinningLine(int row, int col, int rowDir, int colDir)
-        //{
-        //    // Get the start and end buttons
-        //    Button firstButton = mreza[row, col];
-        //    Button lastButton = mreza[row + 3 * rowDir, col + 3 * colDir];
-
-        //    // Calculate the coordinates for drawing the line
-        //    int x1 = firstButton.Left + firstButton.Width / 2;
-        //    int y1 = firstButton.Top + firstButton.Height / 2;
-        //    int x2 = lastButton.Left + lastButton.Width / 2;
-        //    int y2 = lastButton.Top + lastButton.Height / 2;
-
-        //    // Create a new PictureBox to draw the line on
-        //    PictureBox drawingArea = new PictureBox
-        //    {
-        //        Size = this.ClientSize,
-        //        Location = new Point(0, 0),
-        //        BackColor = Color.Transparent
-        //    };
-
-        //    // Add the PictureBox to the form
-        //    this.Controls.Add(drawingArea);
-        //    drawingArea.BringToFront();
-
-        //    // Draw the line on the PictureBox
-        //    drawingArea.Paint += (sender, e) =>
-        //    {
-        //        using (Pen pen = new Pen(Color.Black, 4)) // Choose an appropriate color and thickness for the line
-        //        {
-        //            e.Graphics.DrawLine(pen, x1, y1, x2, y2);
-        //            //e.Graphics.
-        //        }
-        //    };
-
-        //    // Trigger the paint event to draw the line immediately
-        //    this.Invalidate();
-        //    //UstvariPolje();
-        //}
+        
     }
 }
