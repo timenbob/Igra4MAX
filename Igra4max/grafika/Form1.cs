@@ -195,7 +195,7 @@ namespace grafika
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"Širina polja: {sirina}, Višina polja: {visina}, Ime igralec1: {ime1}, Ime igralec2: {ime2}");
+
 
 
             KateriEkran = true;
@@ -208,24 +208,33 @@ namespace grafika
             int dimS;
             if (int.TryParse(sirinaText, out dimS))
             {
-                if (dimS > 3 || dimS < 30)
+                if (dimS > 3 && dimS <= 30)
                 { sirina = dimS; }
             }
 
             int dimV;
             if (int.TryParse(visinaText, out dimV))
             {
-                if (dimV > 3 || dimS < 30)
+                if (dimV > 3 && dimV <= 30)
                 { visina = dimV; }
             }
 
             if (ime1Text != "")
             {
-                ime1 = ime1Text;
+                if (ime1Text.Length > 5)
+                {
+                    ime1 = ime1Text.Substring(0, 5) + "...";
+                }
+                else { ime1 = ime1Text; }
+
             }
             if (ime2Text != "")
             {
-                ime2 = ime2Text;
+                if (ime2Text.Length > 5)
+                {
+                    ime2 = ime2Text.Substring(0, 5) + "...";
+                }
+                else { ime2 = ime2Text; }
             }
 
             textBox4.Visible = false;
@@ -238,17 +247,20 @@ namespace grafika
             label1.Visible = false;
             button1.Visible = false;
 
-            steviloZasedenihPolijZaZmago = sirina * visina / 4;
-            steviloZmagZaZmago = visina * sirina / 16;
+            steviloZasedenihPolijZaZmago = sirina * visina / 3;
+            steviloZmagZaZmago = visina * sirina / 17;
 
-
+            MessageBox.Show($"Širina polja: {sirina}, Višina polja: {visina}, Ime igralec1: {ime1}, Ime igralec2: {ime2}");
 
             UstvariPolje();
             int velikostPolja = this.ClientSize.Height;
             int sirinaGumba = velikostPolja / sirina;
 
-            this.Width = sirinaGumba * visina + 500;
+
+            this.Width = Math.Min(sirinaGumba * visina + 500, 1100);
             Ime1.BackColor = Color.Red;
+
+
 
         }
 
@@ -310,7 +322,7 @@ namespace grafika
                 this.Controls.Add(stZmag);
             }
             stZmag.Location = new Point(col1X, stPolij.Bottom + padding);
-            stZmag.Text = $"Število zmag / {steviloZmagZaZmago}";
+            stZmag.Text = $"Število zmag(4 v vrsto) / {steviloZmagZaZmago}";
 
 
 
@@ -404,31 +416,50 @@ namespace grafika
         /// <param name="e"></param>
         private void reset_Click(object sender, EventArgs e)
         {
-            // Reset player statistics
-            steviloZasedenihPolij_1 = 0;
-            steviloZasedenihPolij_2 = 0;
-            steviloZmag_1 = 0;
-            steviloZmag_2 = 0;
-            naVrsti = Color.Red;
+            Button gumb = sender as Button;
 
-            // Reset the grid
-            for (int i = 0; i < visina; i++)
+            //dodatni dialog da je malo zanimivo
+
+            DialogResult result = MessageBox.Show(
+                "Ste prepričani, da želite ponovno igrati igro ?",
+                "Ponovi igro",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
             {
-                for (int j = 0; j < sirina; j++)
+                // Reset player statistics
+                steviloZasedenihPolij_1 = 0;
+                steviloZasedenihPolij_2 = 0;
+                steviloZmag_1 = 0;
+                steviloZmag_2 = 0;
+                naVrsti = Color.Red;
+
+                // Reset the grid
+                for (int i = 0; i < visina; i++)
                 {
-                    if (mreza[i, j] != null)
+                    for (int j = 0; j < sirina; j++)
                     {
-                        mreza[i, j].BackColor = Color.White;
-                        mreza[i, j].Enabled = true; // Re-enable the button
+                        if (mreza[i, j] != null)
+                        {
+                            mreza[i, j].BackColor = Color.White;
+                            mreza[i, j].Enabled = true; // Re-enable the button
+                        }
                     }
                 }
+
+                Ime1.BackColor = Color.Red;
+                Ime2.BackColor = Color.White;
+
+                // Update the UI with reset values
+                SledenjePodatkov();
+
             }
-
-            Ime1.BackColor = Color.Red;
-            Ime2.BackColor = Color.White;
-
-            // Update the UI with reset values
-            SledenjePodatkov();
+            else
+            {
+                MessageBox.Show("Igra se nadlajuje!", "Ponovi igro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
 
@@ -471,10 +502,10 @@ namespace grafika
             Button gumb = sender as Button;
 
             DialogResult result = MessageBox.Show(
-                "Igro se igra podobno kot 4 v vrsto. Če je nekaj 4ri v vrsto že povezanih,\n" +
+                "Igro se igra podobno kot 4 v vrsto. Če je nekaj štiri v vrsto že povezanih,\n" +
                 "lahko eno polje že povezanih uporabimo za naprej. Zmaga tisti igralec, ki prvi nabere potrebno število zmaga,\n" +
-                "to število najdete na ekranu. Zmagaš lahko tudi tako, da naberes dovolj enot. Če je polje polno se najprej primerja\n" +
-                "po zmagah in na to po enotah.",
+                "to število najdete na ekranu. Zmagaš lahko tudi tako, da naberes dovolj območij. Če je polje polno se najprej primerja\n" +
+                "po zmagah in nato po območjih.",
                 "Navodila",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
@@ -568,7 +599,9 @@ namespace grafika
             int velikostPolja = this.ClientSize.Height;
             int sirinaGumba1 = velikostPolja / sirina;
             int sirinaGumba2 = (this.ClientSize.Width - 400) / visina;
-            int sirinaGumba = Math.Min(sirinaGumba1, sirinaGumba2);
+            int sirinaGumba3 = (1100 - 500) / visina;
+            int sirinaGumba4 = 1000 / sirina;
+            int sirinaGumba = Math.Min(Math.Min(sirinaGumba1, sirinaGumba2), Math.Min(sirinaGumba3, sirinaGumba4));
 
             this.Width = sirinaGumba * visina + 500;
 
@@ -593,6 +626,7 @@ namespace grafika
             }
 
             SledenjePodatkov();
+
         }
 
 
@@ -606,7 +640,8 @@ namespace grafika
         {
             if (this.ClientSize.Height <= 400) { this.Height = 450; };
             if (this.ClientSize.Height >= 1000) { this.Height = 900; };
-            if (this.ClientSize.Width <= 800) { this.Width = 1000; };
+            if (this.ClientSize.Width <= 800) { this.Width = 900; };
+            if (this.ClientSize.Width >= 1100) { this.Width = 1100; };
 
             int velikostPolja = this.ClientSize.Height;
             //int sirinaGumba = velikostPolja / sirina;
